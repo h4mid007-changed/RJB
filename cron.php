@@ -30,7 +30,7 @@ $r = fn($photo);
 		if (file_exists("./photo/$r") !== true) {
 file_put_contents("./photo/$r", file_get_contents($photo));
 }
-$opz = [[array("text"=>"Download!","url"=>"https://t.me/Radiojvnbot?start=download_$id")]];
+$opz = [[array("text"=>"Download!","url"=>"https://t.me/$botID?start=download_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $text = "New Song!\n\n$title by $artist";
 $ch = curl_init();
@@ -54,7 +54,7 @@ $r = fn($photo);
 		if (file_exists("./photo/$r") !== true) {
 file_put_contents("./photo/$r", file_get_contents($photo));
 }
-$opz = [[array("text"=>"Show!","url"=>"https://t.me/Radiojvnbot?start=playlist_$id")]];
+$opz = [[array("text"=>"Show!","url"=>"https://t.me/$botID?start=playlist_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $text = "Feautured Playlist!\n\n'$title'";
 $ch = curl_init();
@@ -83,7 +83,7 @@ $r = fn($photo);
 		if (file_exists("./photo/$r") !== true) {
 file_put_contents("./photo/$r", file_get_contents($photo));
 }
-$opz = [[array("text"=>"Show!","url"=>"https://t.me/Radiojvnbot?start=playlist_$id")]];
+$opz = [[array("text"=>"Show!","url"=>"https://t.me/$botID?start=playlist_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $text = "NEW Playlist!\n\n'$title'";
 $ch = curl_init();
