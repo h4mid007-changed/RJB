@@ -1,5 +1,7 @@
 <?php
 ini_set('default_charset', 'utf-8');
+$botapi = getenv('RJBotKey');
+$siteurl = getenv('RJSiteUrl');
 $tg = json_decode(file_get_contents('php://input'));
 file_put_contents('tg.json', json_encode($tg));
 if (isset($tg->callback_query)) {
@@ -44,7 +46,7 @@ file_put_contents("./photo/$r", file_get_contents($photo));
 $opz = [[array("text"=>"Download!","callback_data"=>"/download_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
+$url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -68,7 +70,7 @@ file_put_contents("./photo/$r", file_get_contents($photo));
 $opz = [[array("text"=>"Show!","callback_data"=>"/playlist_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
+$url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -93,7 +95,7 @@ file_put_contents("./photo/$r", file_get_contents($photo));
 $opz = [[array("text"=>"Show!","callback_data"=>"/playlist_$id")]];
 $dlkey = json_encode(array("inline_keyboard"=>$opz));
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
+$url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid&reply_markup=$dlkey";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -108,7 +110,7 @@ curl_close($ch);
 elseif (stripos($m, '/search') !== false) {
 	$q = urlencode(str_replace('/search ', '', $m));
 	if (strlen($q) <1) {
-		file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=Nothing found!");
+		file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=Nothing found!");
 		exit;
 	}
 	$s = "https://rjvnapi.com/api2/search?query=$q";
@@ -126,10 +128,10 @@ elseif (stripos($m, '/search') !== false) {
 	}
 	$text = $c . $text;
 	//file_put_contents('tg', $text);
-	//file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=$text");
+	//file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$text");
 
 	$ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid";
+$url = "https://api.telegram.org/$botapi/sendMessage?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -144,7 +146,7 @@ elseif ($m == "/topweek") {
 	goto CameFromTopWeekCommand;
 }
 elseif (strpos($m, '/playlist_') !== false) {
-	//file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=pl");
+	//file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=pl");
 	$id = str_replace('/playlist_', '', $m);
 	CameFromTopWeekCommand:
 	$data = json_decode(file_get_contents("https://rjvnapi.com/api2/mp3_playlist?id=$id"), true);
@@ -166,7 +168,7 @@ elseif (strpos($m, '/playlist_') !== false) {
 //	$opz = $array;
 //$dlkey = json_encode(array("inline_keyboard"=>$opz));
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid";
+$url = "https://api.telegram.org/$botapi/sendMessage?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -178,7 +180,7 @@ exit;
 }
 
 elseif (strpos($m, '/download_') !== false) {
-	//file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=pl");
+	//file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=pl");
 	$id = str_replace('/download_', '', $m);
 	$song = json_decode(file_get_contents("https://rjvnapi.com/api2/mp3?id=$id"), true);
 		$title = $song['title'];
@@ -192,23 +194,23 @@ elseif (strpos($m, '/download_') !== false) {
 		file_put_contents("./photo/$r", file_get_contents($photo));
 		}
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendPhoto?chat_id=$uid";
+$url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./photo/$r")), "caption" => "$title ($plays Plays)"));
 curl_exec($ch);
 curl_close($ch);
-file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=$lyric&parse_mode=HTML");
+file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$lyric&parse_mode=HTML");
 exit;
 }
 elseif (stripos($m, 'http') !== false) {
-file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=" . urlencode("Trying to get $m .........."));
+file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=" . urlencode("Trying to get $m .........."));
 $a = file_get_contents($m);
 if (!strlen($a) > 500) { exit; }
 file_put_contents(fn($m), $a);
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendDocument?chat_id=$uid";
+$url = "https://api.telegram.org/$botapi/sendDocument?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -222,7 +224,7 @@ exit;
 //related
 
 elseif (strpos($m, '/related_') !== false) {
-	//file_get_contents("https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid&text=pl");
+	//file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=pl");
 	$id = str_replace('/related_', '', $m);
 	$song = json_decode(file_get_contents("https://rjvnapi.com/api2/mp3?id=$id"), true);
 	$otitle = $song['title'];
@@ -237,7 +239,7 @@ elseif (strpos($m, '/related_') !== false) {
 		$x++;
 		}
 $ch = curl_init();
-$url = "https://api.telegram.org/RJBotKey/sendMessage?chat_id=$uid";
+$url = "https://api.telegram.org/$botapi/sendMessage?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
@@ -247,7 +249,7 @@ curl_close($ch);
 exit;
 }
 elseif ($m == '/update') {
-	file_get_contents('RJSiteUrl/cron.php?do=home');
+	file_get_contents("$siteurl/cron.php?do=home");
 	exit;
 }
 else {
