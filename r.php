@@ -293,7 +293,7 @@ $url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid";
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch,CURLOPT_POST, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./photo/$r")), "caption" => "$title از $artist\n$mp3"));
+curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./photo/$r")), "caption" => "$titleen by $artisten"));
 $result = curl_exec($ch);
 curl_close($ch);
 }
