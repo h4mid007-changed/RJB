@@ -278,7 +278,8 @@ foreach ($mr as $mr) {
 $album = $mr['tfa'];
 $artist = $mr['afa'];
 $title =  $mr['trtfa'];
-$photo ="https://storage.backtory.com/mrtehran/media/" . $mr['ph'];
+//$photo ="https://storage.backtory.com/mrtehran/media/" . $mr['ph'];
+$photo ="https://storage.backtory.com/mrtehran/media/" . $mr['tmb'];
 $artisten = $mr['a'];
 $titleen = $mr['trt'];
 $mp3 ='https://storage.backtory.com/mrtehran/media/' . $mr['u'] . "?filename=$artisten - $titleen.mp3";
@@ -297,7 +298,7 @@ curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./ph
 $result = curl_exec($ch);
 curl_close($ch);
 	$text = urlencode("<a href='$mp3'>Download $titleen by $artisten</a>");
-	file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$text");
+	file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$text&parse_mode=HTML");
 }
 exit;
 } 
