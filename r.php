@@ -278,7 +278,7 @@ foreach ($mr as $mr) {
 $album = $mr['tfa'];
 $artist = $mr['afa'];
 $title =  $mr['trtfa'];
-$photo = $mr['ph'];
+$photo ="https://storage.backtory.com/mrtehran/media/" . $mr['ph'];
 $artisten = $mr['a'];
 $titleen = $mr['trt'];
 $mp3 ='https://storage.backtory.com/mrtehran/media/' . $mr['u'] . "?filename=$artisten - $titleen.mp3";
