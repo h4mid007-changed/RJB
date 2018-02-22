@@ -254,6 +254,51 @@ elseif ($m == '/update') {
 	file_get_contents("$siteurl/cron.php?do=home");
 	exit;
 }
+elseif ($m == '/mr') {
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL,"https://mrtehran.com/mt-app/v402/browse_popular.php");
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS,"a=0&");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$headers = [
+    'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
+    'User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.2; GT-I9505 Build/KOT49H)',
+    'Connection: Keep-Alive',
+    'Accept-Encoding: gzip',
+    'Content-Length: 4'
+];
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$mr = curl_exec ($ch);
+curl_close ($ch);
+$mr = json_decode($mr, true);
+foreach ($mr as $mr) {
+$album = $mr['tfa'];
+$artist = $mr['afa'];
+$title =  $mr['trtfa'];
+$photo = $mr['ph'];
+$artisten = $mr['a'];
+$titleen = $mr['trt'];
+$mp3 ='https://storage.backtory.com/mrtehran/media/' . $mr['u'] . "?filename=$artisten - $titleen.mp3";
+$r = fn($photo);
+		if (file_exists("./photo/$r") !== true) {
+file_put_contents("./photo/$r", file_get_contents($photo));
+}
+//$opz = [[array("text"=>"Download!","callback_data"=>"/download_$id")]];
+//$dlkey = json_encode(array("inline_keyboard"=>$opz));
+$ch = curl_init();
+$url = "https://api.telegram.org/$botapi/sendPhoto?chat_id=$uid";
+curl_setopt($ch,CURLOPT_URL, $url);
+curl_setopt($ch,CURLOPT_POST, 1);
+curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./photo/$r")), "caption" => "$title از $artist\n$mp3"));
+$result = curl_exec($ch);
+curl_close($ch);
+}
+exit;
+} 
 else {
 	exit;
 }
