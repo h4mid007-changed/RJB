@@ -9,17 +9,7 @@ if (isset($tg->callback_query)) {
 }
 $mid = $tg->message->message_id;
 $uid = $tg->message->from->id;
-//file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=32709704&text=Ok");
-/*
-if ($uid !== 32709704 OR $uid !== 340809697) {
-	exit;
-}
-*/
-if ($uid !== 32709704) {
-	if ($uid !== 340809697) {
-		exit;
-	}
-}
+file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=32709704&text=Ok");
 $m = urldecode($tg->message->text);
 if (isset($tg->callback_query)) {
 	cb:
