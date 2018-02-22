@@ -296,6 +296,8 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch,CURLOPT_POSTFIELDS, array("photo" => new CURLFile(realpath("./photo/$r")), "caption" => "$titleen by $artisten"));
 $result = curl_exec($ch);
 curl_close($ch);
+	$text = urlencode($mp3);
+	file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$text");
 }
 exit;
 } 
