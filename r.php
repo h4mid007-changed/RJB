@@ -1,4 +1,5 @@
 <?php
+//setting time limit
 set_time_limit(20);
 ini_set('max_execution_time', 20);
 ini_set('default_charset', 'utf-8');
