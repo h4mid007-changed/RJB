@@ -27,6 +27,9 @@ $path_parts = pathinfo($url);
 $name = $path_parts['basename'];
 return $name;
 }
+if ($m == '/mrtehran') {
+	goto mr;
+}
 if (stripos($m, '/start ') !== false) {
 $m =	'/' . str_replace('/start ', '', $m);
 }
@@ -254,7 +257,11 @@ elseif ($m == '/update') {
 	file_get_contents("$siteurl/cron.php?do=home");
 	exit;
 }
-elseif ($m == '/mr') {
+else {
+	exit;
+}
+exit;
+mr:
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL,"https://mrtehran.com/mt-app/v402/browse_popular.php");
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -299,10 +306,5 @@ $result = curl_exec($ch);
 curl_close($ch);
 	$text = urlencode("<a href='$mp3'>Download $titleen by $artisten</a>");
 	file_get_contents("https://api.telegram.org/$botapi/sendMessage?chat_id=$uid&text=$text&parse_mode=HTML");
-}
-exit;
-} 
-else {
-	exit;
 }
 exit;
